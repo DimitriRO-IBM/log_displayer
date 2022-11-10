@@ -1,0 +1,64 @@
+.log-table {
+    &__container {
+        margin: 10%;
+        display: flex;
+        flex-direction: column;
+        width: available;
+    }
+
+    &__header {
+        @extend .log-table--box;
+
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+
+        border-bottom: none;
+
+        &--index {
+            @extend .log-table--box;
+            @extend .log-table--box--index;
+        }
+        &--date {
+            @extend .log-table--box;
+            @extend .log-table--box--date;
+        }
+        &--message {
+            @extend .log-table--box;
+            @extend .log-table--box--message;
+        }
+    }
+
+    &__content {
+        @extend .log-table--box;
+
+        border-top: none;
+
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__content--empty {
+        @extend .log-table--box;
+
+        border-top: none;
+        display: flex;
+    }
+
+    &--box {
+        border: 1px solid black;
+        margin: 5px;
+        padding: 10px;
+
+        &--index {
+            flex: 0.2;
+        }
+        &--date {
+            flex: 0.3;
+        }
+        &--message{
+            flex: 0.5;
+        }
+    }
+}

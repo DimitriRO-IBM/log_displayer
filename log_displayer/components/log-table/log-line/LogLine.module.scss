@@ -1,0 +1,23 @@
+@import "../LogTable.module.scss";
+
+.log-table__line {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+
+    &--index {
+        @extend .log-table--box;
+        @extend .log-table--box--index;
+    }
+
+    &--date {
+        @extend .log-table--box;
+        @extend .log-table--box--date;
+    }
+
+    &--message {
+        @extend .log-table--box;
+        @extend .log-table--box--message;
+    }
+}
