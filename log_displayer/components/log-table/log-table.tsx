@@ -10,6 +10,11 @@ type LogTableProps = {
 export const LogTable = ({logs}: LogTableProps) => {
     const [_logs, setLogs] = useState(logs ?? []);
 
+    useEffect(() => {
+        console.log("LogTable:: In use effect ==>", logs);
+        setLogs(logs);
+    }, [logs]);
+
     let displayedLogs: JSX.Element | JSX.Element[] = <div className={styles["log-table__content--empty"]}>No logs in table</div>;
 
     if (_logs.length) {

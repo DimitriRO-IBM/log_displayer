@@ -1,21 +1,33 @@
+import { useEffect, useState } from 'react';
 import { Constants } from '../lib/constants';
 import { NextProgressbarSpinner } from 'nextjs-progressbar-spinner/dist/cjs';
-import useSWR from 'swr';
+import useSWR, { SWRConfiguration, useSWRConfig } from 'swr';
 import { LogTable } from '../components/log-table/log-table';
 import fetcher = Constants.fetcher;
 
-function useLogs() {
-    const { data, error } = useSWR('api/logs', fetcher);
-
-    return {
-        logs: data,
-        isLoading: !data && !error,
-        isError: error,
-    }
-}
-
 export default function HomeApp() {
-    const { logs, isLoading, isError } = useLogs();
+    const [logs, setLogs] = useState();
+
+    const useLogs = () => {
+        const { data, error } = useSWR('api/logs', {
+            fetcher,
+            refreshInterval: 1000,
+            refreshWhenHidden: true,
+        } as SWRConfiguration);
+
+        return {
+            _logs: data?.logs,
+            isLoading: !data && !error,
+            isError: error,
+        }
+    }
+
+    const { _logs, isLoading, isError } = useLogs();
+
+    useEffect(() => {
+        console.log('In use effect ==>', _logs);
+        setLogs(_logs)
+    } ,[_logs, logs])
 
     if (isLoading) {
         return <NextProgressbarSpinner></NextProgressbarSpinner>
@@ -29,7 +41,7 @@ export default function HomeApp() {
 
     return (
         <div className="main">
-            <LogTable logs={ [...logs?.logs ] }></LogTable>
+            <LogTable logs={ [..._logs ] }></LogTable>
         </div>
     );
 }
